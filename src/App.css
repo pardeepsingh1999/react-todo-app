@@ -1,0 +1,13 @@
+* {
+    background-color: rgb(122, 122, 201);
+}
+
+header h1 {
+    font-size: 100px;
+    color: rgba(175, 47, 47, 0.15);
+}
+
+.main__note__filter button {
+    min-width: 100px;
+    
+}

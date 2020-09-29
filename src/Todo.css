@@ -1,0 +1,16 @@
+.completed {
+    text-decoration: line-through;
+}
+
+.child__note p {
+    font-size: 22px;
+}
+
+.child__note__checkbox {
+    height: 22px;
+    width: 22px;
+}
+
+.child__note {
+    border-bottom: 1px solid rgba(0,0,0,.1) ;
+}
