@@ -3,14 +3,38 @@
 }
 
 .child__note p {
+    user-select: none;
+    cursor: pointer;
     font-size: 22px;
+}
+
+
+.child__note input {
+    height: 28px;
+    font-size: 22px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+}
+
+.child__note input:focus {
+    outline: none;
 }
 
 .child__note__checkbox {
     height: 22px;
     width: 22px;
+    cursor: pointer;
 }
 
 .child__note {
     border-bottom: 1px solid rgba(0,0,0,.1) ;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }

@@ -9,5 +9,20 @@ header h1 {
 
 .main__note__filter button {
     min-width: 100px;
-    
+
+}
+
+#allCheckedInput {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.mark__all__button {
+    cursor: pointer;
+    background: transparent !important;
+}
+
+.mark__all__button:hover {
+    background: blueviolet !important;
 }
