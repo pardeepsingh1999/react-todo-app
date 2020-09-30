@@ -39,7 +39,7 @@ function App(props) {
   async function toggleTodo(todoId) {
     
     const newTodos = [...todos];
-    const todo = newTodos.find(todo => todo.id === todoId);
+    const todo = await newTodos.find(todo => todo.id === todoId);
     todo.complete = !todo.complete;
 
     allTodoMarkOrNot(newTodos);
@@ -132,11 +132,11 @@ function App(props) {
     }
   };
 
-  function updateTodo(todoId, editName) {
+  async function updateTodo(todoId, editName) {
     const newTodos = [...todos];
-    const todo = newTodos.find(todo => todo.id === todoId);
-    console.log(todo.name, editName)
-    todo.name = editName;
+    const todo = await newTodos.find(todo => todo.id === todoId);
+    if(!todo.name) return;
+    todo['name'] = editName;
 
     allTodoMarkOrNot(newTodos);
 
@@ -146,9 +146,9 @@ function App(props) {
   };
 
 
-  function handleClearTodos() {
+  async function handleClearTodos() {
     
-    const newTodos = todos.filter(todo => !todo.complete)
+    const newTodos = await todos.filter(todo => !todo.complete)
     setIsAllTodoMark(!isAllTodoMark)
 
     setTodos(newTodos)
@@ -156,16 +156,16 @@ function App(props) {
     allTodoMarkOrNot(newTodos);
   }
 
-  function handleAllCompleteTodos(e) {
+  async function handleAllCompleteTodos(e) {
     
     setIsAllTodoMark(!isAllTodoMark)
 
     const newTodos = [...todos];
 
     if(e.target.checked) {
-        newTodos.map(todo => todo.complete = true);
+        await newTodos.map(todo => todo.complete = true);
     } else {
-        newTodos.map(todo => todo.complete = false);
+        await newTodos.map(todo => todo.complete = false);
     }
     // console.log(newTodos)
 
