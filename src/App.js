@@ -135,7 +135,8 @@ function App(props) {
   async function updateTodo(todoId, editName) {
     const newTodos = [...todos];
     const todo = await newTodos.find(todo => todo.id === todoId);
-    if(!todo.name) return;
+    if(!todo || !todo.name) return;
+    
     todo['name'] = editName;
 
     allTodoMarkOrNot(newTodos);
