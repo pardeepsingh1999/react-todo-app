@@ -39,6 +39,7 @@ function App(props) {
   async function toggleTodo(todoId) {
     
     const newTodos = [...todos];
+    console.log(newTodos, todoId)
     const todo = await newTodos.find(todo => todo.id === todoId);
     todo.complete = !todo.complete;
 
@@ -110,21 +111,24 @@ function App(props) {
   function handleAddTodo(e) {
     // console.log(todoNameRef.current.value)
 
-    if(e.keyCode === 13 && userTodoData.name.length !== 0) {
+    const name = userTodoData.name ? userTodoData.name.trim() : '';
+
+    if(e.keyCode === 13 && name.length !== 0) {
       
-      const name = userTodoData.name;
       console.log(name)
+
+      let todo_uuid = uuidv4();
 
       setTodos(prevTodos => {
 
-        allTodoMarkOrNot([...prevTodos, { id: uuidv4(), name: name, complete: false}]);
+        allTodoMarkOrNot([...prevTodos, { id: todo_uuid, name: name, complete: false}]);
 
-        return [...prevTodos, { id: uuidv4(), name: name, complete: false}]
+        return [...prevTodos, { id: todo_uuid, name: name, complete: false}]
       })
 
       if(filterTodo.all || filterTodo.active) {
         setFilterTodoList(prevTodos => {
-          return [...prevTodos, { id: uuidv4(), name: name, complete: false}]
+          return [...prevTodos, { id: todo_uuid, name: name, complete: false}]
         })
       } 
 
@@ -153,7 +157,14 @@ function App(props) {
     setIsAllTodoMark(!isAllTodoMark)
 
     setTodos(newTodos)
-    setFilterTodoList(newTodos)
+    await setFilterTodoList(newTodos)
+
+    if(filterTodo.active) {
+        handleShowActiveTodo()
+    } else if (filterTodo.completed) {
+        handleShowCompletedTodo()
+    }
+
     allTodoMarkOrNot(newTodos);
   }
 

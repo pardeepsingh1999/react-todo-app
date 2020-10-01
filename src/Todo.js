@@ -8,6 +8,11 @@ export default class Todo extends Component {
     
         this.handleDoubleClickEditTodo = this.handleDoubleClickEditTodo.bind(this);
         this.handleOutsideClick = this.handleOutsideClick.bind(this);
+
+        // this._onBlur = this._onBlur.bind(this)
+        // this._onFocus = this._onFocus.bind(this)
+
+        this.editTodoData = React.createRef()
     }
 
     state = {
@@ -16,7 +21,7 @@ export default class Todo extends Component {
     }
 
     handleTodoClick = () => {
-        // console.log(this.props)
+        console.log(this.props.todo)
         this.props.toggleTodo(this.props.todo.id)
     }
 
@@ -26,20 +31,23 @@ export default class Todo extends Component {
 
     handleOutsideClick(e) {
         // ignore clicks on the component itself
-        console.log(e.keycode)
-        if(e.target.type === 'text') return;
+        console.log('inblur',e.target)
+        // if(e.target.type === 'text') return;
         
         this.handleDoubleClickEditTodo()
     }
 
     handleDoubleClickEditTodo = (e) => {
         if (!this.state.isEdit) {
-            document.addEventListener('click', this.handleOutsideClick, false);
+            // document.addEventListener('click', this.handleOutsideClick, false);
             this.setState({editName:this.props.todo.name})
+            this.editTodoData.current.focus()
         } else {
-            document.removeEventListener('click', this.handleOutsideClick, false);
-            if(this.state.editName.length > 0 ) {
-                this.props.updateTodo(this.props.todo.id, this.state.editName)
+            // document.removeEventListener('click', this.handleOutsideClick, false);
+            let editTodoName = this.state.editName.trim()
+
+            if(editTodoName.length > 0 ) {
+                this.props.updateTodo(this.props.todo.id, editTodoName)
             } else {
                 alert('Empty list not acceptable')
                 console.log(this.props.todo.name)
@@ -57,11 +65,15 @@ export default class Todo extends Component {
     handleEditKeyDown = (e) => {
         // console.log(todoNameRef.current.value)
     
-        if(e.keyCode === 13 && this.props.todo.name.length !== 0) {
+        const name = this.props.todo.name.trim();
+
+        if(e.keyCode === 13 && name.length !== 0) {
           
             this.handleDoubleClickEditTodo()
-            if(this.state.editName.length > 0 ) {
-                this.props.updateTodo(this.props.todo.id, this.state.editName)
+            let editTodoName = this.state.editName.trim()
+
+            if(editTodoName.length > 0 ) {
+                this.props.updateTodo(this.props.todo.id, editTodoName)
             } else {
                 console.log(this.props.todo.name)
             }
@@ -90,7 +102,9 @@ export default class Todo extends Component {
                                 {this.props.todo.name} 
                             </p>
                             <input className={this.state.isEdit ? 'show' : 'hide'} 
+                            ref={this.editTodoData}
                             type="text" value={this.state.editName} 
+                            onBlur={this.handleOutsideClick}
                             onKeyDown={this.handleEditKeyDown}
                             onChange={this.handleEditOnChange} />                            
                         </div>
