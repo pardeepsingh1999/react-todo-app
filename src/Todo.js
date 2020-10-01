@@ -31,7 +31,7 @@ export default class Todo extends Component {
 
     handleOutsideClick(e) {
         // ignore clicks on the component itself
-        console.log('inblur',e.target)
+        // console.log('inblur',e.target)
         // if(e.target.type === 'text') return;
         
         this.handleDoubleClickEditTodo()
@@ -41,7 +41,13 @@ export default class Todo extends Component {
         if (!this.state.isEdit) {
             // document.addEventListener('click', this.handleOutsideClick, false);
             this.setState({editName:this.props.todo.name})
-            this.editTodoData.current.focus()
+
+            this.setState({                
+                isEdit: !this.state.isEdit
+            },()=>{
+                this.editTodoData.current.focus()
+            })
+
         } else {
             // document.removeEventListener('click', this.handleOutsideClick, false);
             let editTodoName = this.state.editName.trim()
@@ -52,10 +58,11 @@ export default class Todo extends Component {
                 alert('Empty list not acceptable')
                 console.log(this.props.todo.name)
             }
+            this.setState({isEdit: !this.state.isEdit})
         }
-        console.log(this.state.isEdit)
+        // console.log(this.state.isEdit)
 
-        this.setState({isEdit: !this.state.isEdit})
+
     }
 
     handleEditOnChange = (e) => {

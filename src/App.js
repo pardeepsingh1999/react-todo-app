@@ -39,7 +39,7 @@ function App(props) {
   async function toggleTodo(todoId) {
     
     const newTodos = [...todos];
-    console.log(newTodos, todoId)
+    // console.log(newTodos, todoId)
     const todo = await newTodos.find(todo => todo.id === todoId);
     todo.complete = !todo.complete;
 
